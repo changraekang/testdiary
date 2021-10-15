@@ -65,8 +65,34 @@
 
 						calendar.render();
 					});
-</script>
+	function loadFile(input) {
+		var file = input.files[0]; //선택된 파일 가져오기
+		/*  
+		 */
+		//미리 만들어 놓은 div에 text(파일 이름) 추가
+		//새로운 이미지 div 추가
+		//document.getElementById('image-upload').style.visibility = 'hidden';
 
+		var newImage = document.createElement("img");
+		newImage.setAttribute("class", 'img');
+
+		//이미지 source 가져오기
+		newImage.src = URL.createObjectURL(file);
+
+		newImage.style.width = "70%";
+		newImage.style.height = "70%";
+		newImage.style.objectFit = "contain";
+
+		//이미지를 image-show div에 추가
+		var container = document.getElementById('image-show');
+		$("#image-show").attr("src",newImage );
+	};
+</script>
+<style>
+#chooseFile {
+	visibility: hidden;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -74,28 +100,37 @@
 	<div id="calendar" style="float: left; width: 66%;"></div>
 
 	<div id="diary" style="float: left; width: 33%;">
-	<form action="/join" method="post">
-		<div class="form-group">
-			<input type="text" id="date" name="username" class="form-control"
-				required="required" readonly="readonly">
+		<form action="/join" method="post">
+			<div class="form-group">
+				<input type="text" id="date" name="username" class="form-control"
+					required="required" readonly="readonly">
+			</div>
+			<div class="form-group">
+				<input type="text" name="username" class="form-control"
+					placeholder="음식명을 입력해주세요" required="required" maxlength="20">
+			</div>
+
+			<div class="form-group">
+				<input type="text" name="username" class="form-control"
+					placeholder="kcal" required="required" maxlength="20">
+			</div>
+			<div class="image-upload" id="image-upload">
+
+				<div class="button">
+					<label for="chooseFile"> 👉 CLICK HERE! 👈 </label>
+				</div>
+				<input type="file" id="chooseFile" name="chooseFile"
+					accept="image/*" onchange="loadFile(this)">
+			</div>
+			<div class="image-show" id="image-show"></div>
+			<button type="submit" class="btn btn-primary">일기저장</button>
+		</form>
+
+
+
+		<div class="container">
+			<form method="post" enctype="multipart/form-data"></form>
 		</div>
-		<div class="form-group">
-			<input type="text" name="username" class="form-control"
-				placeholder="음식명을 입력해주세요" required="required" maxlength="20">
-		</div>
-		
-		<div class="form-group">
-			<input type="text" name="username" class="form-control"
-				placeholder="kcal" required="required" maxlength="20">
-		</div>
-		
-		<div class="form-group">
-			<input type="text" name="username" class="form-control"
-				placeholder="사진" required="required" maxlength="20">
-		</div>
-		
-		<button type="submit" class="btn btn-primary">일기저장</button>
-	</form>
 	</div>
 </body>
 </html>
